@@ -1,15 +1,20 @@
 class Admin::ProductsController < ApplicationController
+  USER_NAME, PASSWORD = ENV['USER_NAME'], ENV['PASSWORD']
+  
+  before_filter :authenticate
 
   def index
     @products = Product.order(id: :desc).all
   end
-
+ 
   def new
     @product = Product.new
   end
 
   def create
     @product = Product.new(product_params)
+    
+  
 
     if @product.save
       redirect_to [:admin, :products], notice: 'Product created!'
@@ -35,6 +40,11 @@ class Admin::ProductsController < ApplicationController
       :image,
       :price
     )
+  end
+  def authenticate
+    authenticate_or_request_with_http_basic do |username, password| 
+      username == USER_NAME && password == PASSWORD
+    end
   end
 
 end
