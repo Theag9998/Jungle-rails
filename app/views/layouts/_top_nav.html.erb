@@ -43,6 +43,7 @@
           </ul>
         </li>
         <li>
+        
           <%= link_to cart_path do %>
             <%= fa_icon "shopping-cart" %> My Cart (<%= cart.size %>)
           <% end %>
@@ -54,7 +55,6 @@
             <%= link_to 'Login', '/login' %> <%= link_to 'Signup', '/signup' %>
           <% end %>
           
-          <%= yield %>
         </li>
       </ul>
     </div>
