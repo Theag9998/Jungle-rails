@@ -45,8 +45,18 @@ RSpec.describe User, type: :model do
       expect(@user1).to_not be_valid 
     end
   end
-  
+
   describe '.authenticate_with_credentials' do
-    # examples for this class method here
+    
+    it 'should still authenicate successfully if a vistor has a few spaces before or after their email address' do
+      user1 = User.create({first_name: "Test Name", last_name: "Test lastname", email: "example@domain.com", password: "hello", password_confirmation: "hello"})
+      
+      expect(User.authenticate_with_credentials(" example@domain.com ", "hello")).to eq(user1)
+    end
+    it 'should still authenicate successfully if a vistor types in the wrong case for their email address' do
+      user1 = User.create({first_name: "Test Name", last_name: "Test lastname", email: "eXample@domain.COM", password: "hello", password_confirmation: "hello"})
+      
+      expect(User.authenticate_with_credentials("EXAMPLe@DOMAIN.CoM", "hello")).to eq(user1) 
+    end
   end
 end
